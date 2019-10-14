@@ -36,3 +36,39 @@ jobs:
       - store_artifacts:
           path: release
           destination: book
+  deploy-build:
+    docker:
+      - image: nutti/colorful-pico.net:v1.0
+    branches:
+      only:
+        - master
+        - ci_testing
+    steps:
+      - checkout
+      - run:
+          name: Get binaries from Git LFS
+          command: git lfs pull
+      - run:
+          name: Install npm dependencies
+          command: npm install
+      - run:
+          name: Install gem dependencies
+          command: bundle install && gem install compass
+      - run:
+          name: Create HTML files (Blender 2.7)
+          command: gulp build --blender-version=2.7
+      - run:
+          name: Create HTML files (Blender 2.8)
+          command: gulp build --blender-version=2.8
+      - run:
+          name: Make release directory
+          command: mkdir release
+      - run:
+          name: Compress files as tarball (Blender 2.7)
+          command: cd build && tar cvfz 2.7.tar.gz 2.7 && cd .. && mv build/2.7.tar.gz release
+      - run:
+          name: Compress files as tarball (Blender 2.8)
+          command: cd build && tar cvfz 2.8.tar.gz 2.8 && cd .. && mv build/2.8.tar.gz release
+      - store_artifacts:
+          path: release
+          destination: book
