@@ -51,10 +51,10 @@ jobs:
           command: source ~/.bashrc && bundle install && gem install compass
       - run:
           name: Create HTML files (Blender 2.7)
-          command: gulp build --blender-version=2.7
+          command: source ~/.bashrc && gulp build --blender-version=2.7
       - run:
           name: Create HTML files (Blender 2.8)
-          command: gulp build --blender-version=2.8
+          command: source ~/.bashrc && gulp build --blender-version=2.8
       - run:
           name: Make release directory
           command: mkdir release
