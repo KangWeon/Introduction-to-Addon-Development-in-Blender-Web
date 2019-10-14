@@ -41,6 +41,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Setup bash environment
+          command: source ~/.bashrc
+      - run:
           name: Get binaries from Git LFS
           command: git lfs pull
       - run:
