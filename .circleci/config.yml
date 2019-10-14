@@ -41,9 +41,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup bash environment
-          command: source ~/.bashrc
-      - run:
           name: Get binaries from Git LFS
           command: git lfs pull
       - run:
@@ -51,7 +48,7 @@ jobs:
           command: npm install
       - run:
           name: Install gem dependencies
-          command: bundle install && gem install compass
+          command: source ~/.bashrc && bundle install && gem install compass
       - run:
           name: Create HTML files (Blender 2.7)
           command: gulp build --blender-version=2.7
